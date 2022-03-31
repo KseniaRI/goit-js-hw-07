@@ -37,20 +37,29 @@ function onGalleryContainerClick(event) {
 }
 
 function createModalWithOriginalImage(url) {
+
     const instance = basicLightbox.create(`
     <div class="modal">
         <img src="${url}" width="1280">
     </div>
     `, {
-            onShow: (instance) => {
-            document.onkeydown = (e) => {  
-                    if (e.code === "Escape") {
+        onShow: (instance) => {
+            document.addEventListener("keydown", function onEscape(e) {
+
+                if (e.code === "Escape") {
                     instance.close();
+                    document.removeEventListener("keydown", onEscape);
                     }
-                }
-            }
-        })
-    instance.show()
+            })
+            // document.onkeydown = (e) => {  
+            //         if (e.code === "Escape") {
+            //         instance.close();
+            //         }
+            //     }
+        }
+    })
+    
+    instance.show();
 }
 
 
